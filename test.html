@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Currency App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        form {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px #ccc;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            box-shadow: 0px 0px 5px #ccc;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            background-color: #003366;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .result {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px #ccc;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 500px;
+            text-align: center;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <header>
+        <h1>Currency App</h1>
+    </header>
+
+    <form>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" placeholder="Enter amount">
+
+        <label for="from">From:</label>
+        <select id="from" name="from">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+        </select>
+
+        <label for="to">To:</label>
+        <select id="to" name="to">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+        </select>
+
+        <button type="submit">Convert</button>
+    </form>
+
+    <div class="result">
+        <p>Result: <span id="result"></span></p>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        const resultEl = document.getElementById('result');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const amount = document.getElementById('amount').value;
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            const result = convert(amount, from, to);
+            resultEl.textContent = result;
+        });
+
+        function convert(amount, from, to) {
+            const exchangeRate = getExchangeRate(from, to);
+            return (amount * exchangeRate).toFixed(2);
+        function getExchangeRate(from, to) {
+        // This is where you would call an API to get the exchange rate
+        // For this example, we'll just use a simple lookup table
+        const exchangeRates = {
+        "USD": {
+        "EUR": 0.84,
+        "GBP": 0.72,
+        "JPY": 108.88
+        },
+        "EUR": {
+        "USD": 1.19,
+        "GBP": 0.86,
+        "JPY": 130.48
+        },
+        "GBP": {
+        "USD": 1.39,
+        "EUR": 1.16,
+        "JPY": 151.11
+        },
+        "JPY": {
+        "USD": 0.0092,
+        "EUR": 0.0077,
+        "GBP": 0.0066
+        }
+        };
+        return exchangeRates[from][to];
+        }
+        }
+    </script>
+</body>
+
+</html>
